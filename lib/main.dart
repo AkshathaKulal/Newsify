@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:newsify_demo/features/news/presentation/pages/dashboard_screen.dart';
 
 import 'core/utils/constants.dart';
 
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Newsify'),
+      home: DashboardScreen(),
     );
   }
 }
