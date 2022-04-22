@@ -9,3 +9,8 @@ class NewsLoading extends NewsEvent{
   List<Object?> get props => throw UnimplementedError();
 
 }
+class NewsLoaded extends NewsEvent{
+  @override
+  List<Object?> get props => throw UnimplementedError();
+
+}

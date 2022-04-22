@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:newsify_demo/features/news/presentation/bloc/news_bloc.dart';
 import 'package:newsify_demo/features/news/presentation/pages/dashboard_screen.dart';
 
 import 'core/utils/constants.dart';
@@ -27,7 +29,10 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: DashboardScreen(),
+      home: BlocProvider<NewsBloc>(
+        create: (context) => NewsBloc(),
+        child: DashboardScreen(),
+      ),
     );
   }
 }
