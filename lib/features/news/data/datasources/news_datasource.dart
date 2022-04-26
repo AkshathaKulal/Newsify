@@ -3,20 +3,22 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 import 'package:http/retry.dart';
+import 'package:newsify_demo/core/error/exceptions/exceptions.dart';
+import 'package:newsify_demo/core/error/exceptions/internal_exception.dart';
 import 'package:newsify_demo/core/utils/api_urls.dart';
 
 import '../../../../core/model/common_response_model.dart';
 import '../../../../core/utils/constants.dart';
 import '../models/news_model.dart';
 
-abstract class NewsDataSources {
+abstract class NewsRemoteDataSources {
   Future<dynamic> getNews();
 }
 
-class NewsDatasourcesImpl implements NewsDataSources {
+class NewsRemoteDatasourcesImpl implements NewsRemoteDataSources {
   RetryClient retryClient;
 
-  NewsDatasourcesImpl(this.retryClient);
+  NewsRemoteDatasourcesImpl(this.retryClient);
 
   @override
   Future<dynamic> getNews() async {
@@ -28,13 +30,13 @@ class NewsDatasourcesImpl implements NewsDataSources {
             onTimeout: onTimeOut,
           );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == Constants.HTTP_OK) {
         return NewsModel.fromJson(jsonDecode(response.body));
       } else {
-        throw Exception('Failed to load news');
+        throw InternalException.fromJson(jsonDecode(response.body));
       }
     } catch (e) {
-      print(e);
+      return ServerException(e);
     }
   }
 

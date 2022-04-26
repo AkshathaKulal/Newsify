@@ -47,15 +47,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       Text(Constants.AUTHOR_NAME, style: Styles.SUB_TITLE),
                     ],
                   ),
-                  actions: [
-                    const Icon(
+                  actions: const [
+                    Icon(
                       Icons.dark_mode,
                       color: Colors.black,
                     ),
-                    const SizedBox(
+                    SizedBox(
                       width: 20,
                     ),
-                    const Icon(
+                    Icon(
                       Icons.info,
                       color: Colors.black,
                     ),

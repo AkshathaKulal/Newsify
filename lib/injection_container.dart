@@ -22,7 +22,8 @@ Future<void> setUpControllers() async {
   locator.registerLazySingleton<NewsDataSources>(
       () => NewsDatasourcesImpl(retryClient));
   locator.registerLazySingleton<NewsController>(() => NewsController());
-  locator.registerLazySingleton<NewsRepo>(() => NewsRepoImpl(locator()));
+  locator.registerLazySingleton<NewsRepo>(
+      () => NewsRepoImpl(newsDatasources: locator()));
   locator
       .registerLazySingleton<GetNewsUseCase>(() => GetNewsUseCase(locator()));
 }

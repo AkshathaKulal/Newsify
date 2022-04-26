@@ -1,4 +1,6 @@
-class CommonResponse {
+import 'package:equatable/equatable.dart';
+
+class CommonResponse extends Equatable {
   int? code;
   String? message;
 
@@ -15,4 +17,8 @@ class CommonResponse {
     data['message'] = message;
     return data;
   }
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [];
 }
