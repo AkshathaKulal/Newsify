@@ -10,6 +10,7 @@ class Constants {
   static const AUTHOR_NAME = "by ishandeveloper";
 
   //Api client
+  static const int HTTP_UNAUTHORIZED = 401;
   static const int HTTP_CLIENT_TIMEOUT = 408;
   static const int HTTP_OK = 200;
   static const int HTTP_INTERNAL_ERROR = 500;

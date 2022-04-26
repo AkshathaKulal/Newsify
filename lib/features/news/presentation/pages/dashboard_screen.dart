@@ -1,13 +1,12 @@
 import 'dart:core';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newsify_demo/core/utils/constants.dart';
 import 'package:newsify_demo/core/utils/styles.dart';
 import 'package:newsify_demo/features/news/presentation/bloc/news_bloc.dart';
 import 'package:newsify_demo/features/news/presentation/pages/news_screen.dart';
-
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -17,8 +16,6 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-
-
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
@@ -28,7 +25,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       strokeWidth: 3,
       triggerMode: RefreshIndicatorTriggerMode.onEdge,
       onRefresh: () async {
-
+        BlocProvider.of<NewsBloc>(context).add(NewsLoading());
       },
       child: Scaffold(
           appBar: PreferredSize(
@@ -88,64 +85,93 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   );
                 }).toList(),
               ),
-        BlocBuilder<NewsBloc, NewsState>(
-        builder: (context, state) {
-          if(state is NewsLoading){
-            return CircularProgressIndicator();
-          }else if(state is NewsFetched){
-            return Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(18.0),
-                child: ListView.separated(
-                  itemCount: state.itemCount,
-                  itemBuilder: (context, index) {
-                    var articles = state.articles;
-                    return InkWell(
-                      onTap: (){
-                        if(articles[index].content != null) {
-                          Navigator.push(context, MaterialPageRoute(
-                              builder: (context) =>
-                                  NewsScreen(
-                                      newsDataLoaded: articles[index]
-                                          .content)));
-                        }else{
-                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                            content: Text('Thats all the News for you!'),
-                          ),);
-
-                        }
-                      },
-                      child: Column(children: [
-                        ClipRRect(
-                          borderRadius: const BorderRadius.only(
-                            topLeft: const Radius.circular(10),
-                            topRight: const Radius.circular(10),
-                          ),
-                          child: Image.network(articles[index].urlToImage!),
-                        ),
-                        Text(
-                          articles[index].title!,
-                          style: Styles.HEADING,
-                        ),
-                        Text(
-                          articles[index].description!,
-                          style: Styles.SUB_HEADING,
-                        ),
-                      ]),
-                    );
-
-
-                  }, separatorBuilder: (BuildContext context, int index) {
-                  return SizedBox(height: 40,);
-                },),
-              ),
-            );
-          }else { return CircularProgressIndicator();}
-
-        }),
+              BlocBuilder<NewsBloc, NewsState>(builder: (context, state) {
+                if (state is NewsLoading) {
+                  return const Expanded(
+                    child: Align(
+                        alignment: Alignment.center,
+                        child: CircularProgressIndicator(
+                          color: Colors.black,
+                          backgroundColor: Colors.white,
+                        )),
+                  );
+                } else if (state is NewsFetched) {
+                  return Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: ListView.separated(
+                        itemCount: state.itemCount - 1,
+                        itemBuilder: (context, index) {
+                          var articles = state.articles;
+                          return InkWell(
+                            onTap: () {
+                              if (articles[index].content != null) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => NewsScreen(
+                                            newsDataLoaded:
+                                                articles[index].content)));
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content:
+                                        Text('Thats all the News for you!'),
+                                  ),
+                                );
+                              }
+                            },
+                            child: Column(children: [
+                              ClipRRect(
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(10),
+                                    topRight: Radius.circular(10),
+                                  ),
+                                  child: (articles[index].urlToImage == null)
+                                      ? Image.asset(
+                                          'assets/images/placeholder.png')
+                                      : FadeInImage.assetNetwork(
+                                          image: articles[index].urlToImage!,
+                                          placeholder:
+                                              "assets/images/placeholder.png",
+                                        )),
+                              Text(
+                                articles[index].title ?? " ",
+                                style: Styles.HEADING,
+                              ),
+                              Text(
+                                articles[index].description ?? " ",
+                                style: Styles.SUB_HEADING,
+                              ),
+                            ]),
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return const SizedBox(
+                            height: 40,
+                          );
+                        },
+                      ),
+                    ),
+                  );
+                } else {
+                  return Expanded(
+                    child: Align(
+                        alignment: Alignment.center,
+                        child: CircularProgressIndicator(
+                          color: Colors.black,
+                          backgroundColor: Colors.white,
+                        )),
+                  );
+                }
+              }),
             ],
           )),
     );
   }
-}
 
+  @override
+  void initState() {
+    BlocProvider.of<NewsBloc>(context).add(NewsLoading());
+  }
+}

@@ -1,4 +1,3 @@
-
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
@@ -8,17 +7,11 @@ import 'constants.dart';
 
 mixin Commons {
   double getWidthAsPerScreenRatio(BuildContext context, double ratio) {
-    return (MediaQuery
-        .of(context)
-        .size
-        .width * ratio) / 100;
+    return (MediaQuery.of(context).size.width * ratio) / 100;
   }
 
   double getHeightAsPerScreenRatio(BuildContext context, double ratio) {
-    return (MediaQuery
-        .of(context)
-        .size
-        .height * ratio) / 100;
+    return (MediaQuery.of(context).size.height * ratio) / 100;
   }
 
   Future<void> clearSnackBars(BuildContext context) async {
@@ -27,7 +20,7 @@ mixin Commons {
 
   PreferredSize getCustomAppBar() {
     return PreferredSize(
-      preferredSize: Size.fromHeight(100.0),
+      preferredSize: const Size.fromHeight(100.0),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: AppBar(
@@ -46,7 +39,7 @@ mixin Commons {
               ],
             ),
             actions: [
-              Icon(
+              const Icon(
                 Icons.info,
                 color: Colors.black,
               ),
@@ -54,5 +47,4 @@ mixin Commons {
       ),
     );
   }
-
 }

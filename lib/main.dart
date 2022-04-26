@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newsify_demo/features/news/presentation/bloc/news_bloc.dart';
 import 'package:newsify_demo/features/news/presentation/pages/dashboard_screen.dart';
+import 'package:newsify_demo/injection_container.dart';
 
 import 'core/utils/constants.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  await setUpDependencies().whenComplete(() => runApp(const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
       ),
       home: BlocProvider<NewsBloc>(
         create: (context) => NewsBloc(),
-        child: DashboardScreen(),
+        child: const DashboardScreen(),
       ),
     );
   }
@@ -81,7 +82,10 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title,style:  const TextStyle(fontFamily: Constants.POPPINS_SEMI_BOLD),),
+        title: Text(
+          widget.title,
+          style: const TextStyle(fontFamily: Constants.POPPINS_SEMI_BOLD),
+        ),
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
@@ -103,9 +107,8 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-                'You have pushed the button this many times:',style: TextStyle(fontFamily: Constants.POPPINS_LIGHT)
-            ),
+            const Text('You have pushed the button this many times:',
+                style: TextStyle(fontFamily: Constants.POPPINS_LIGHT)),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headline4,

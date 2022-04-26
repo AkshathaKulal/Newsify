@@ -3,21 +3,20 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 import 'package:http/retry.dart';
-import 'package:newsify_demo/core/network/api_client.dart';
 import 'package:newsify_demo/core/utils/api_urls.dart';
 
 import '../../../../core/model/common_response_model.dart';
-import '../../../../core/model/news_model.dart';
 import '../../../../core/utils/constants.dart';
+import '../models/news_model.dart';
 
-abstract class NewsDatasources {
+abstract class NewsDataSources {
   Future<dynamic> getNews();
 }
 
+class NewsDatasourcesImpl implements NewsDataSources {
+  RetryClient retryClient;
 
-class NewsDatasourcesImpl implements NewsDatasources {
-  RetryClient retryClient = ApiClient().getApiClient() as RetryClient;
-
+  NewsDatasourcesImpl(this.retryClient);
 
   @override
   Future<dynamic> getNews() async {
@@ -25,13 +24,12 @@ class NewsDatasourcesImpl implements NewsDatasources {
       var apiUrl = ApiUrl.BASE_URL;
 
       var response = await retryClient.get(Uri.parse(apiUrl)).timeout(
-        const Duration(seconds: Constants.DEFAULT_HTTP_TIMEOUT),
-        onTimeout: onTimeOut,
-      );
-
+            const Duration(seconds: Constants.DEFAULT_HTTP_TIMEOUT),
+            onTimeout: onTimeOut,
+          );
 
       if (response.statusCode == 200) {
-        return News.fromJson(jsonDecode(response.body));
+        return NewsModel.fromJson(jsonDecode(response.body));
       } else {
         throw Exception('Failed to load news');
       }
@@ -39,7 +37,6 @@ class NewsDatasourcesImpl implements NewsDatasources {
       print(e);
     }
   }
-
 
   FutureOr<Response> onTimeOut() async {
     throw CommonResponse(

@@ -14,12 +14,7 @@ class NewsFetched extends NewsState {
   List<Articles> articles;
 
   NewsFetched(this.itemCount, this.articles);
-  @override
-  List<Object> get props => [itemCount,articles];
-}
-
-class NewsFetching extends NewsState {
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [itemCount, articles];
 }
