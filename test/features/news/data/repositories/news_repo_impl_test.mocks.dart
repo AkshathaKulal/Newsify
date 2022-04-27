@@ -7,7 +7,7 @@ import 'dart:async' as _i5;
 import 'package:http/http.dart' as _i3;
 import 'package:http/retry.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:newsify_demo/features/news/data/datasources/news_datasource.dart'
+import 'package:newsify_demo/features/news/data/datasources/news_remote_datasource.dart'
     as _i4;
 
 // ignore_for_file: type=lint
@@ -46,8 +46,8 @@ class MockNewsRemoteDatasourcesImpl extends _i1.Mock
       (super.noSuchMethod(Invocation.method(#getNews, []),
           returnValue: Future<dynamic>.value()) as _i5.Future<dynamic>);
   @override
-  _i5.FutureOr<_i3.Response> onTimeOut() =>
+  _i5.Future<_i3.Response> onTimeOut() =>
       (super.noSuchMethod(Invocation.method(#onTimeOut, []),
               returnValue: Future<_i3.Response>.value(_FakeResponse_1()))
-          as _i5.FutureOr<_i3.Response>);
+          as _i5.Future<_i3.Response>);
 }

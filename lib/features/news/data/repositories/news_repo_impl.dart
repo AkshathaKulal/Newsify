@@ -1,12 +1,13 @@
 import 'package:dartz/dartz.dart';
 import 'package:newsify_demo/core/error/exceptions/exceptions.dart';
 import 'package:newsify_demo/core/error/failures.dart';
-import 'package:newsify_demo/features/news/data/dataSources/news_datasource.dart';
 import 'package:newsify_demo/features/news/domain/entities/news_entity.dart';
 import 'package:newsify_demo/features/news/domain/repositories/news_repo.dart';
 
+import '../datasources/news_remote_datasource.dart';
+
 class NewsRepoImpl implements NewsRepo {
-  NewsDataSources newsDatasources;
+  NewsRemoteDataSources newsDatasources;
 
   NewsRepoImpl({required this.newsDatasources});
 
