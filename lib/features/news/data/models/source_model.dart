@@ -1,5 +1,7 @@
 import 'package:newsify_demo/features/news/domain/entities/source_entity.dart';
 
+/// @author Akshatha
+
 class Source extends SourceEntity {
   String? id;
   String? name;

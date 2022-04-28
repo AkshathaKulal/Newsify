@@ -1,5 +1,7 @@
 part of 'news_bloc.dart';
 
+/// @author Akshatha
+
 abstract class NewsState extends Equatable {
   const NewsState();
 }
@@ -18,6 +20,7 @@ class NewsFetched extends NewsState {
   @override
   List<Object> get props => [itemCount, articles];
 }
+
 class NewsFailed extends NewsState {
   dynamic errorResponse;
 
@@ -25,7 +28,7 @@ class NewsFailed extends NewsState {
 
   List<Object?> get props => [errorResponse];
 }
-class NewsFetching extends NewsState {
 
+class NewsFetching extends NewsState {
   List<Object?> get props => [];
 }

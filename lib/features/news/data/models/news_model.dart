@@ -1,8 +1,9 @@
-
 import '../../domain/entities/news_entity.dart';
 import 'articles_model.dart';
 
-class NewsModel extends NewsEntity{
+/// @author Akshatha
+
+class NewsModel extends NewsEntity {
   String? status;
   int? totalResults;
   List<Articles>? articles;
@@ -30,5 +31,3 @@ class NewsModel extends NewsEntity{
     return data;
   }
 }
-
-

@@ -4,6 +4,8 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'package:newsify_demo/core/error/exceptions/exceptions.dart';
+import 'package:newsify_demo/core/error/failures.dart';
 import 'package:newsify_demo/features/news/data/datasources/news_remote_datasource.dart';
 import 'package:newsify_demo/features/news/data/models/news_model.dart';
 import 'package:newsify_demo/features/news/data/repositories/news_repo_impl.dart';
@@ -19,7 +21,7 @@ void main() async {
   setUpAll(() {
     repo = NewsRepoImpl(newsDatasources: dataSources);
   });
-  group("Successfully Retrive the data from News Data Repo", () {
+  group("Successfully retrieve the data from News Data Repo", () {
     test("Successfully get the news", () async {
       final NewsModel model =
           NewsModel.fromJson(jsonDecode(TestConstants.MOCK_NEWS_RESPONSE));
@@ -30,6 +32,15 @@ void main() async {
       final result = await repo?.getNews();
       verify(dataSources.getNews());
       expect(result, equals(Right(entity)));
+    });
+
+    test("UnSuccessfully to get the news", () async {
+      when(dataSources.getNews()).thenAnswer((_) async {
+        return ServerException(TestConstants.ERROR_RESPONSE);
+      });
+      final result = await repo?.getNews();
+      verify(dataSources.getNews());
+      expect(result, Left(ServerFailure(TestConstants.ERROR_RESPONSE)));
     });
   });
 }

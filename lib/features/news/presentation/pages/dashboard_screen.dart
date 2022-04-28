@@ -9,6 +9,8 @@ import 'package:newsify_demo/features/news/presentation/bloc/news_bloc.dart';
 import 'package:newsify_demo/features/news/presentation/pages/news_screen.dart';
 import 'package:newsify_demo/features/news/themeChange/presentation/bloc/theme_bloc.dart';
 
+/// @author Akshatha
+
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
 
@@ -36,13 +38,10 @@ class _DashboardScreenState extends State<DashboardScreen> with Commons {
                 appBar: PreferredSize(
                   preferredSize: const Size.fromHeight(100.0),
                   child: Builder(builder: (context) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: getCustomAppBar(
-                          context: context,
-                          leadingIcon: Icons.newspaper,
-                          darkMode: true),
-                    );
+                    return getCustomAppBar(
+                        context: context,
+                        leadingIcon: Icons.newspaper,
+                        darkMode: true);
                   }),
                 ),
                 body: Column(

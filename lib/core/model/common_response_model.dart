@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 
+/// @author Akshatha
+
 class CommonResponse extends Equatable {
   int? code;
   String? message;

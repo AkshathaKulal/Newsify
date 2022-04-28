@@ -42,7 +42,7 @@ void main() {
     });
 
     blocTest<NewsBloc, NewsState>(
-        'emit NewsFetched once the News is loaded for API',
+        'emit NewsFetched once the News is loaded from API',
         build: () {
           when(mockRetryClient.get(Uri.parse(ApiUrl.BASE_URL)))
               .thenAnswer((_) async {
@@ -53,5 +53,32 @@ void main() {
         },
         act: (bloc) => bloc.add(NewsLoaded()),
         expect: () => [isA<NewsFetched>()]);
+
+    blocTest<NewsBloc, NewsState>(
+        'emit NewsFailed once the News is not loaded from API',
+        build: () {
+          when(mockRetryClient.get(Uri.parse(ApiUrl.BASE_URL)))
+              .thenAnswer((_) async {
+            return http.Response(
+                TestConstants.ERROR_RESPONSE, Constants.HTTP_INTERNAL_ERROR);
+          });
+          return NewsBloc();
+        },
+        act: (bloc) => bloc.add(NewsLoaded()),
+        expect: () => [isA<NewsFailed>()]);
+
+
+  blocTest<NewsBloc, NewsState>(
+        'emit NewsFetching once screen is refreshed',
+        build: () {
+          when(mockRetryClient.get(Uri.parse(ApiUrl.BASE_URL)))
+              .thenAnswer((_) async {
+            return http.Response(
+                TestConstants.ERROR_RESPONSE, Constants.HTTP_INTERNAL_ERROR);
+          });
+          return NewsBloc();
+        },
+        act: (bloc) => bloc.add(NewsLoading()),
+        expect: () => [isA<NewsFetching>()]);
   });
 }

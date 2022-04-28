@@ -7,6 +7,8 @@ import 'package:newsify_demo/features/news/themeChange/presentation/bloc/theme_b
 
 import 'constants.dart';
 
+/// @author Akshatha
+
 mixin Commons {
   double getWidthAsPerScreenRatio(BuildContext context, double ratio) {
     return (MediaQuery.of(context).size.width * ratio) / 100;
@@ -66,8 +68,9 @@ mixin Commons {
                 width: 20,
               ),
               InkWell(
-                onTap: (){
-                  ViewUtils().callSnackbar(context, "Please refresh for latest news!");
+                onTap: () {
+                  ViewUtils()
+                      .callSnackbar(context, "Please refresh for latest news!");
                 },
                 child: const Icon(
                   Icons.info,

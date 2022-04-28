@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 
+/// @author Akshatha
+
 class SourceEntity extends Equatable {
   String? id;
   String? name;

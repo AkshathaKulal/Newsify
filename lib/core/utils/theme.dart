@@ -3,6 +3,8 @@ import 'package:newsify_demo/core/utils/config.dart';
 
 import 'constants.dart';
 
+/// @author Akshatha
+
 enum AppTheme {
   Light,
   Dark,

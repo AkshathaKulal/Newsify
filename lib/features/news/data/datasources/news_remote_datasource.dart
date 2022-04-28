@@ -7,9 +7,10 @@ import 'package:newsify_demo/core/error/exceptions/exceptions.dart';
 import 'package:newsify_demo/core/error/exceptions/internal_exception.dart';
 import 'package:newsify_demo/core/utils/api_urls.dart';
 
-import '../../../../core/model/common_response_model.dart';
 import '../../../../core/utils/constants.dart';
 import '../models/news_model.dart';
+
+/// @author Akshatha
 
 abstract class NewsRemoteDataSources {
   Future<dynamic> getNews();
@@ -41,8 +42,6 @@ class NewsRemoteDatasourcesImpl implements NewsRemoteDataSources {
   }
 
   FutureOr<Response> onTimeOut() async {
-    throw CommonResponse(
-      code: Constants.HTTP_GATEWAY_TIMEOUT,
-    );
+    throw ServerException(Constants.HTTP_CLIENT_TIMEOUT);
   }
 }

@@ -1,8 +1,9 @@
-
 import 'package:newsify_demo/features/news/data/models/source_model.dart';
 import 'package:newsify_demo/features/news/domain/entities/article_entity.dart';
 
-class Articles extends ArticlesEntity{
+/// @author Akshatha
+
+class Articles extends ArticlesEntity {
   Source? source;
   String? author;
   String? title;
@@ -14,13 +15,13 @@ class Articles extends ArticlesEntity{
 
   Articles(
       {this.source,
-        this.author,
-        this.title,
-        this.description,
-        this.url,
-        this.urlToImage,
-        this.publishedAt,
-        this.content});
+      this.author,
+      this.title,
+      this.description,
+      this.url,
+      this.urlToImage,
+      this.publishedAt,
+      this.content});
 
   Articles.fromJson(Map<String, dynamic> json) {
     source = json['source'] != null ? Source.fromJson(json['source']) : null;

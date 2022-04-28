@@ -3,6 +3,7 @@ import 'package:newsify_demo/core/usecase/usecase.dart';
 import 'package:newsify_demo/features/news/domain/usecases/get_news_usecase.dart';
 
 import '../../injection_container.dart';
+/// @author Akshatha
 
 class NewsController {
   NewsController();

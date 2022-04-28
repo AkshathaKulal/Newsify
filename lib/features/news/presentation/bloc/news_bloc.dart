@@ -10,6 +10,8 @@ part 'news_event.dart';
 
 part 'news_state.dart';
 
+/// @author Akshatha
+
 class NewsBloc extends Bloc<NewsEvent, NewsState> {
   NewsBloc() : super(NewsInitial()) {
     on<NewsEvent>((event, emit) async {

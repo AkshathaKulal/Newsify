@@ -6,6 +6,8 @@ import 'package:newsify_demo/features/news/domain/repositories/news_repo.dart';
 
 import '../datasources/news_remote_datasource.dart';
 
+/// @author Akshatha
+
 class NewsRepoImpl implements NewsRepo {
   NewsRemoteDataSources newsDatasources;
 

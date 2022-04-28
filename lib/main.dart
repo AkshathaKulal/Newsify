@@ -1,5 +1,5 @@
+import 'package:newsify_demo/core/utils/constants.dart';
 import 'package:newsify_demo/features/news/themeChange/presentation/bloc/theme_bloc.dart';
-
 import 'core/utils/config.dart' as globals;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,9 +11,11 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import 'injection_container.dart';
 
+/// @author Akshatha
+
 void main() async {
   await Hive.initFlutter();
-  globals.box = await Hive.openBox("theme");
+  globals.box = await Hive.openBox(Constants.THEME_BOX_TAG);
   await setUpDependencies().whenComplete(() => runApp(const MyApp()));
 }
 

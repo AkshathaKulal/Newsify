@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 
+/// @author Akshatha
+
 class InternalException extends Equatable {
   int? code;
   String? message;

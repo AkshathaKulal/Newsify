@@ -10,6 +10,8 @@ import 'features/news/domain/repositories/news_repo.dart';
 
 final locator = GetIt.instance;
 
+/// @author Akshatha
+
 Future<void> setUpDependencies() async {
   locator.registerLazySingleton<ApiClient>(() => ApiClient());
   locator

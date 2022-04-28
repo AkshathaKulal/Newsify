@@ -3,6 +3,8 @@ import 'package:http/retry.dart';
 
 import '../utils/constants.dart';
 
+/// @author Akshatha
+
 class ApiClient {
   Future<RetryClient> getApiClient() async {
     var client = RetryClient(http.Client(), retries: Constants.RETRY_COUNT,
