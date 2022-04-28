@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:newsify_demo/core/utils/common_mixin.dart';
+import 'package:newsify_demo/core/utils/dimens.dart';
+
+import '../../../../core/utils/constants.dart';
 
 /// @author Akshatha
 
@@ -22,13 +25,15 @@ class _NewsScreenState extends State<NewsScreen> with Commons {
           leadingIcon: Icons.arrow_back_ios,
           darkMode: false,
           backButton: true),
-      body: Container(
-          child: SingleChildScrollView(
-        child: Text(
-          widget.newsDataLoaded ?? "Something Went Wrong!",
-          style: Theme.of(context).textTheme.bodyLarge,
+      body: SingleChildScrollView(
+        child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: Dimens.margin10),
+      child: Text(
+        widget.newsDataLoaded ?? Constants.ERROR_MSG,
+        style: Theme.of(context).textTheme.bodyLarge,
+      ),
         ), // your root container
-      )),
+      ),
     );
   }
 }

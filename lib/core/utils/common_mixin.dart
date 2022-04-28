@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:newsify_demo/core/utils/dimens.dart';
 import 'package:newsify_demo/core/utils/view_utils.dart';
 import 'package:newsify_demo/features/news/themeChange/presentation/bloc/theme_bloc.dart';
 
@@ -28,7 +29,7 @@ mixin Commons {
       bool darkMode = true,
       bool backButton = false}) {
     return PreferredSize(
-      preferredSize: const Size.fromHeight(100.0),
+      preferredSize: const Size.fromHeight(Dimens.margin10),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: AppBar(
@@ -60,7 +61,7 @@ mixin Commons {
                         BlocProvider.of<ThemeBloc>(context).add(ThemeChanged());
                       },
                       child: const Icon(
-                        Icons.dark_mode,
+                        Icons.light_mode,
                       ),
                     )
                   : SizedBox(),

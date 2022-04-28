@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newsify_demo/core/utils/common_mixin.dart';
 import 'package:newsify_demo/core/utils/constants.dart';
+import 'package:newsify_demo/core/utils/dimens.dart';
 import 'package:newsify_demo/features/news/presentation/bloc/news_bloc.dart';
 import 'package:newsify_demo/features/news/presentation/pages/news_screen.dart';
 import 'package:newsify_demo/features/news/themeChange/presentation/bloc/theme_bloc.dart';
@@ -22,10 +23,10 @@ class _DashboardScreenState extends State<DashboardScreen> with Commons {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-        displacement: 250,
+        displacement: Dimens.displacement,
         backgroundColor: Colors.white,
         color: Colors.black,
-        strokeWidth: 3,
+        strokeWidth: Dimens.strokeWidth,
         triggerMode: RefreshIndicatorTriggerMode.onEdge,
         onRefresh: () async {
           BlocProvider.of<NewsBloc>(context).add(NewsLoading());
@@ -36,7 +37,7 @@ class _DashboardScreenState extends State<DashboardScreen> with Commons {
             theme: state.themeData,
             home: Scaffold(
                 appBar: PreferredSize(
-                  preferredSize: const Size.fromHeight(100.0),
+                  preferredSize: const Size.fromHeight(Dimens.appBarHeight),
                   child: Builder(builder: (context) {
                     return getCustomAppBar(
                         context: context,
@@ -46,42 +47,7 @@ class _DashboardScreenState extends State<DashboardScreen> with Commons {
                 ),
                 body: Column(
                   children: [
-                    CarouselSlider(
-                      options: CarouselOptions(
-                        initialPage: 0,
-                        aspectRatio: 5,
-                        disableCenter: true,
-                        enlargeCenterPage: false,
-                      ),
-                      items: Constants.carouselList.map((item) {
-                        return Builder(
-                          builder: (BuildContext context) {
-                            return Stack(children: <Widget>[
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.black,
-                                  borderRadius: BorderRadius.circular(20),
-                                  image: DecorationImage(
-                                    fit: BoxFit.fill,
-                                    image: NetworkImage(item),
-                                  ),
-                                ),
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 20),
-                              ),
-                              Align(
-                                alignment: Alignment.center,
-                                child: Text("Global",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineLarge
-                                        ?.copyWith(color: Colors.white)),
-                              )
-                            ]);
-                          },
-                        );
-                      }).toList(),
-                    ),
+                    const showCarousel(),
                     BlocConsumer<NewsBloc, NewsState>(
                         listener: (context, state) {},
                         builder: (context, state) {
@@ -90,7 +56,7 @@ class _DashboardScreenState extends State<DashboardScreen> with Commons {
                                 child: Align(
                                     alignment: Alignment.center,
                                     child: Text(
-                                      "Something Went Wrong! Refresh!",
+                                      Constants.ERROR_MSG,
                                       style: Theme.of(context)
                                           .textTheme
                                           .headlineLarge,
@@ -98,7 +64,7 @@ class _DashboardScreenState extends State<DashboardScreen> with Commons {
                           } else if (state is NewsFetched) {
                             return Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.all(18.0),
+                                padding: const EdgeInsets.all(Dimens.margin18),
                                 child: ListView.separated(
                                   itemCount: state.itemCount - 1,
                                   itemBuilder: (context, index) {
@@ -119,7 +85,7 @@ class _DashboardScreenState extends State<DashboardScreen> with Commons {
                                               .showSnackBar(
                                             const SnackBar(
                                               content: Text(
-                                                  'Thats all the News for you!'),
+                                                  Constants.NEWS_DESCRIP_MSG),
                                             ),
                                           );
                                         }
@@ -135,15 +101,15 @@ class _DashboardScreenState extends State<DashboardScreen> with Commons {
                                                         .urlToImage ==
                                                     null)
                                                 ? Image.asset(
-                                                    'assets/images/placeholder.png')
+                                                    Constants.ASSET_PLACEHOLDER)
                                                 : FadeInImage.assetNetwork(
                                                     image: articles[index]
                                                         .urlToImage!,
                                                     placeholder:
-                                                        "assets/images/placeholder.png",
+                                                    Constants.ASSET_PLACEHOLDER,
                                                   )),
-                                        SizedBox(
-                                          height: 10,
+                                        const SizedBox(
+                                          height: Dimens.margin10,
                                         ),
                                         Text(
                                           articles[index].title ?? " ",
@@ -163,7 +129,7 @@ class _DashboardScreenState extends State<DashboardScreen> with Commons {
                                   separatorBuilder:
                                       (BuildContext context, int index) {
                                     return const SizedBox(
-                                      height: 40,
+                                      height: Dimens.margin40,
                                     );
                                   },
                                 ),
@@ -172,9 +138,9 @@ class _DashboardScreenState extends State<DashboardScreen> with Commons {
                           } else if (state is NewsFetching) {
                             BlocProvider.of<NewsBloc>(context)
                                 .add(NewsLoaded());
-                            return showLoader();
+                            return const showLoader();
                           } else {
-                            return showLoader();
+                            return const showLoader();
                           }
                         }),
                   ],
@@ -187,6 +153,52 @@ class _DashboardScreenState extends State<DashboardScreen> with Commons {
   void initState() {
     super.initState();
     BlocProvider.of<NewsBloc>(context).add(NewsLoaded());
+  }
+}
+
+class showCarousel extends StatelessWidget {
+  const showCarousel({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return  CarouselSlider(
+      options: CarouselOptions(
+        initialPage: 0,
+        aspectRatio: 5,
+        disableCenter: true,
+        enlargeCenterPage: false,
+      ),
+      items: Constants.carouselList.map((item) {
+        return Builder(
+          builder: (BuildContext context) {
+            return Stack(children: <Widget>[
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(20),
+                  image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: NetworkImage(item),
+                  ),
+                ),
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 20),
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: Text("Global",
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineLarge
+                        ?.copyWith(color: Colors.white)),
+              )
+            ]);
+          },
+        );
+      }).toList(),
+    );
   }
 }
 
