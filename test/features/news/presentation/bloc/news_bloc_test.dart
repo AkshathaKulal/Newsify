@@ -51,7 +51,7 @@ void main() {
           });
           return NewsBloc();
         },
-        act: (bloc) => bloc.add(NewsLoading()),
+        act: (bloc) => bloc.add(NewsLoaded()),
         expect: () => [isA<NewsFetched>()]);
   });
 }

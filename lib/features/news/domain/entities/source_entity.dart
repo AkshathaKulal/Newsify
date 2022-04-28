@@ -7,6 +7,5 @@ class SourceEntity extends Equatable {
   SourceEntity({this.id, this.name});
 
   @override
-  // TODO: implement props
   List<Object?> get props => [];
 }

@@ -2,7 +2,6 @@
 import '../../domain/entities/news_entity.dart';
 import 'articles_model.dart';
 
-
 class NewsModel extends NewsEntity{
   String? status;
   int? totalResults;

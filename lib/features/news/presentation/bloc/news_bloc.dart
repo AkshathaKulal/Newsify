@@ -7,16 +7,25 @@ import '../../data/models/articles_model.dart';
 import '../../data/models/news_model.dart';
 
 part 'news_event.dart';
+
 part 'news_state.dart';
 
 class NewsBloc extends Bloc<NewsEvent, NewsState> {
   NewsBloc() : super(NewsInitial()) {
     on<NewsEvent>((event, emit) async {
+      if (event is NewsLoaded) {
+        await locator.get<NewsController>().getNews().then((value) {
+          if (value is NewsModel) {
+            int? itemsCount = value.articles?.length;
+            List<Articles>? articles = value.articles;
+            emit(NewsFetched(itemsCount!, articles!));
+          } else {
+            emit(NewsFailed(value));
+          }
+        });
+      }
       if (event is NewsLoading) {
-        NewsModel dataNews = await locator.get<NewsController>().getNews();
-        int? itemsCount = dataNews.articles?.length;
-        List<Articles>? articles = dataNews.articles;
-        emit(NewsFetched(itemsCount!, articles!));
+        emit(NewsFetching());
       }
     });
   }

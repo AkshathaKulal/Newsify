@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:newsify_demo/core/utils/styles.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:newsify_demo/core/utils/view_utils.dart';
+import 'package:newsify_demo/features/news/themeChange/presentation/bloc/theme_bloc.dart';
 
 import 'constants.dart';
 
@@ -18,7 +20,11 @@ mixin Commons {
     ScaffoldMessenger.of(context).clearSnackBars();
   }
 
-  PreferredSize getCustomAppBar() {
+  PreferredSize getCustomAppBar(
+      {required BuildContext context,
+      required IconData leadingIcon,
+      bool darkMode = true,
+      bool backButton = false}) {
     return PreferredSize(
       preferredSize: const Size.fromHeight(100.0),
       child: Padding(
@@ -26,22 +32,46 @@ mixin Commons {
         child: AppBar(
             elevation: 0,
             titleSpacing: 10,
-            leading: const Icon(
-              Icons.arrow_back_ios,
-              color: Colors.black,
+            leading: InkWell(
+              onTap: () {
+                if (backButton) {
+                  Navigator.pop(context);
+                }
+              },
+              child: Icon(
+                leadingIcon,
+              ),
             ),
-            backgroundColor: Colors.white,
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text(Constants.APP_NAME, style: Styles.TITLE),
-                Text(Constants.AUTHOR_NAME, style: Styles.SUB_TITLE),
+              children: [
+                Text(Constants.APP_NAME,
+                    style: Theme.of(context).textTheme.titleLarge),
+                Text(Constants.AUTHOR_NAME,
+                    style: Theme.of(context).textTheme.titleMedium),
               ],
             ),
             actions: [
-              const Icon(
-                Icons.info,
-                color: Colors.black,
+              (darkMode)
+                  ? InkWell(
+                      onTap: () {
+                        BlocProvider.of<ThemeBloc>(context).add(ThemeChanged());
+                      },
+                      child: const Icon(
+                        Icons.dark_mode,
+                      ),
+                    )
+                  : SizedBox(),
+              const SizedBox(
+                width: 20,
+              ),
+              InkWell(
+                onTap: (){
+                  ViewUtils().callSnackbar(context, "Please refresh for latest news!");
+                },
+                child: const Icon(
+                  Icons.info,
+                ),
               ),
             ]),
       ),

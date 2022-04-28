@@ -18,3 +18,14 @@ class NewsFetched extends NewsState {
   @override
   List<Object> get props => [itemCount, articles];
 }
+class NewsFailed extends NewsState {
+  dynamic errorResponse;
+
+  NewsFailed(this.errorResponse);
+
+  List<Object?> get props => [errorResponse];
+}
+class NewsFetching extends NewsState {
+
+  List<Object?> get props => [];
+}

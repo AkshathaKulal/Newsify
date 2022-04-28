@@ -4,6 +4,7 @@ import 'package:newsify_demo/core/utils/common_mixin.dart';
 
 class NewsScreen extends StatefulWidget {
   final String? newsDataLoaded;
+
   const NewsScreen({Key? key, this.newsDataLoaded}) : super(key: key);
 
   @override
@@ -14,13 +15,13 @@ class _NewsScreenState extends State<NewsScreen> with Commons {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getCustomAppBar(),
+      appBar:
+          getCustomAppBar(context: context, leadingIcon: Icons.arrow_back_ios,darkMode: false,backButton: true),
       body: Container(
-          alignment: Alignment.centerRight,
           child: SingleChildScrollView(
             child: Text(
-              widget.newsDataLoaded ?? "Ojkkhk",
-              style: const TextStyle(fontSize: 25.0),
+              widget.newsDataLoaded ?? "Something Went Wrong!",
+              style: Theme.of(context).textTheme.bodyLarge,
             ), // your root container
           )),
     );
