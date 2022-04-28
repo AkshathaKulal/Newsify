@@ -64,7 +64,7 @@ mixin Commons {
                         Icons.light_mode,
                       ),
                     )
-                  : SizedBox(),
+                  : const SizedBox(),
               const SizedBox(
                 width: 20,
               ),

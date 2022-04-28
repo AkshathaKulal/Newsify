@@ -8,9 +8,9 @@ import 'package:newsify_demo/features/news/domain/usecases/get_news_usecase.dart
 import 'package:newsify_demo/features/news/data/datasources/news_remote_datasource.dart';
 import 'features/news/domain/repositories/news_repo.dart';
 
-final locator = GetIt.instance;
-
 /// @author Akshatha
+
+final locator = GetIt.instance;
 
 Future<void> setUpDependencies() async {
   locator.registerLazySingleton<ApiClient>(() => ApiClient());
